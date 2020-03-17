@@ -31,22 +31,24 @@ module.exports = function () {
 		}
 
 		content = content.trim().replace(/^<script>/, '').replace(/<\/script>$/, '').trim();
-		content = `function ${component}() {
-			${style ? `
-			if (!document.getElementById('${component}')) {
-				const style = document.createElement('style');
-				style.setAttribute('id', '${component}');
-				style.innerHTML='${style.replace(/\s+/g, ' ')}';
-				// WebKit Hack
-				style.appendChild(document.createTextNode(''));
-				document.head.appendChild(style);
+		content = `
+			/* exported ${component} */
+			function ${component}() {
+				${style ? `
+				if (!document.getElementById('${component}')) {
+					const style = document.createElement('style');
+					style.setAttribute('id', '${component}');
+					style.innerHTML='${style.replace(/\s+/g, ' ')}';
+					style.appendChild(document.createTextNode('')); // WebKit Hack
+					document.head.appendChild(style);
+				}
+				`: ''}
+				const module = {};
+				${content.replace(/\s+/g, ' ')}
+				${template ? `module.exports.template = '${template.replace(/\s+/g, ' ')}';` : ''}
+				return Promise.resolve(module.exports);
 			}
-			`: ''}
-			const module = {};
-			${content.replace(/\s+/g, ' ')}
-			${template ? `module.exports.template = '${template.replace(/\s+/g, ' ')}';` : ''}
-			return Promise.resolve(module.exports);
-		}`;
+		`;
 
 		file.contents = Buffer.from(content, encoding);
 		file.path = file.path + '.js';
