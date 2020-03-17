@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/JamesRobertHugginsNgo/gulp-buildvues/issues"
   },
-  "homepage": "https://github.com/JamesRobertHugginsNgo/gulp-buildvues#readme"
+  "homepage": "https://github.com/JamesRobertHugginsNgo/gulp-buildvues#readme",
+  "dependencies": {
+    "node-sass": "^4.13.1",
+    "through2": "^3.0.1"
+  }
 }
