@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/JamesRobertHugginsNgo/gulp-buildvues#readme",
   "dependencies": {
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "through2": "^3.0.1"
   }
 }
